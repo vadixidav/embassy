@@ -34,6 +34,19 @@ pub fn cortex_m() -> TokenStream {
     }
 }
 
+pub fn msp430() -> TokenStream {
+    quote! {
+        #[msp430_rt::entry]
+        fn main() -> ! {
+            let mut executor = ::embassy_executor::Executor::new();
+            let executor = unsafe { __make_static(&mut executor) };
+            executor.run(|spawner| {
+                spawner.must_spawn(__embassy_main(spawner));
+            })
+        }
+    }
+}
+
 pub fn wasm() -> TokenStream {
     quote! {
         #[wasm_bindgen::prelude::wasm_bindgen(start)]

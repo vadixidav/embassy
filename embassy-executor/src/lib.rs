@@ -25,6 +25,13 @@ cfg_if::cfg_if! {
         #[cfg(feature = "nightly")]
         pub use embassy_macros::main_riscv as main;
     }
+    else if #[cfg(target_arch="msp430")] {
+        #[path="arch/msp430.rs"]
+        mod arch;
+        pub use arch::*;
+        #[cfg(feature = "nightly")]
+        pub use embassy_macros::main_msp430 as main;
+    }
     else if #[cfg(all(target_arch="xtensa", feature = "nightly"))] {
         #[path="arch/xtensa.rs"]
         mod arch;
