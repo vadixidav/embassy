@@ -1,5 +1,6 @@
 #![cfg_attr(not(any(feature = "std", feature = "wasm")), no_std)]
 #![cfg_attr(all(feature = "nightly", target_arch = "xtensa"), feature(asm_experimental_arch))]
+#![cfg_attr(all(feature = "nightly", target_arch = "msp430"), feature(asm_experimental_arch))]
 #![allow(clippy::new_without_default)]
 #![doc = include_str!("../README.md")]
 #![warn(missing_docs)]
