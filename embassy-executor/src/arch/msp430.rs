@@ -64,7 +64,12 @@ impl Executor {
                     }
                     // if not, wait for interrupt
                     else {
-                        asm!("bis #16, R2", options(nomem, nostack, preserves_flags));
+                        // TODO: This stops the CPU, but with Rust it isn't yet clear how to clear
+                        // the CPUOFF bit in the stack's status register before its popped. Likely
+                        // a macro needs to be added to msp430-rt to generate a wrapper that
+                        // ensures the SP on the stack is corrected by calling a generated function.
+                        // asm!("bis #16, R2", options(nomem, nostack, preserves_flags));
+                        asm!("nop", options(nomem, nostack, preserves_flags));
                     }
                 });
                 // if an interrupt occurred while waiting, it will be serviced here
